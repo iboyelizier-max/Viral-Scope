@@ -930,15 +930,19 @@ async function getTikTokVideos(){
   try{
 
     const response = await fetch(
-      WORKER_URL + "/api/videos",
-      {
-        method:"GET",
-        credentials:"include",
-        headers:{
-          "Accept":"application/json"
-        }
-      }
-    );
+  WORKER_URL + "/api/videos",
+  {
+    method:"POST",
+    credentials:"include",
+    headers:{
+      "Accept":"application/json",
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      max_count:20
+    })
+  }
+);
 
     if(!response.ok){
 
