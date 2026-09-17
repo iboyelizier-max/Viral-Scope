@@ -916,9 +916,17 @@ async function getTikTokProfile(){
 
   }
 
-  return data;
+  console.log("=== DATA TIKTOK DARI API ===");
+    console.log(data);
+    console.log("Username:", data?.user?.username);
+    console.log("Followers:", data?.user?.follower_count);
+    console.log("Following:", data?.user?.following_count);
+    console.log("Likes:", data?.user?.likes_count);
+    console.log("Videos:", data?.user?.video_count);
 
-}
+    return data;
+
+  }
 
 
 /* =========================================================
