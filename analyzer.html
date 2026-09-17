@@ -932,14 +932,14 @@ async function getTikTokVideos(){
     const response = await fetch(
   WORKER_URL + "/api/videos",
   {
-    method:"POST",
-    credentials:"include",
-    headers:{
-      "Accept":"application/json",
-      "Content-Type":"application/json"
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "text/plain"
     },
-    body:JSON.stringify({
-      max_count:20
+    body: JSON.stringify({
+      max_count: 20
     })
   }
 );
