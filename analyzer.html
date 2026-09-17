@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TikTok Account Analyzer</title>
+<meta name="theme-color" content="#0b0b10">
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#08090d;--card:rgba(255,255,255,.075);--line:rgba(255,255,255,.11);
+  --text:#f7f7fb;--muted:#a8a9b5;--pink:#ff2d55;--cyan:#20d9ff;
+  --green:#35d49a;--yellow:#ffcf4a;--red:#ff5964;
+}
+body{
+  margin:0;background:
+  radial-gradient(circle at 10% 0%,rgba(255,45,85,.22),transparent 30%),
+  radial-gradient(circle at 90% 15%,rgba(32,217,255,.16),transparent 30%),
+  var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  min-height:100vh;
+}
+.app{width:100%;max-width:620px;margin:auto;padding:18px 15px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--pink),#ff6b88 55%,var(--cyan));display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:0 8px 28px rgba(255,45,85,.25)}
+.brand b{font-size:17px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.badge{font-size:11px;color:#d9d9e3;border:1px solid var(--line);padding:7px 10px;border-radius:999px}
+.hero{text-align:center;padding:16px 8px 22px}
+.hero h1{font-size:31px;line-height:1.08;margin:0 0 10px;letter-spacing:-1px}
+.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.search{margin-top:20px;padding:7px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;display:flex;gap:8px}
+.search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:white;font-size:15px;padding:12px}
+.search button{border:0;border-radius:13px;padding:0 20px;background:linear-gradient(135deg,var(--pink),#ff174d);color:#fff;font-weight:800;cursor:pointer}
+.demo-note{font-size:10px;color:#7e808b;text-align:center;margin:9px 0 0}
+#result{display:none}
+.profile{margin-top:10px;padding:18px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);border-radius:23px}
+.profile-head{display:flex;align-items:center;gap:13px}
+.avatar{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:25px;font-weight:900;background:linear-gradient(135deg,#272733,#11121a);border:2px solid rgba(255,255,255,.15)}
+.profile h2{margin:0;font-size:18px}.handle{color:var(--muted);font-size:12px;margin-top:3px}.bio{color:#c8c9d1;font-size:12px;margin:12px 0 0}
+.health{margin-top:15px;padding:18px;border-radius:20px;background:linear-gradient(135deg,rgba(255,45,85,.12),rgba(255,207,74,.07));border:1px solid var(--line)}
+.label{font-size:12px;color:#c4c5cd}.score-row{display:flex;align-items:end;justify-content:space-between;margin-top:4px}
+.score{font-size:36px;font-weight:900}.status{font-size:12px;color:var(--yellow);padding-bottom:6px}
+.bar{height:8px;background:#262730;border-radius:99px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:inherit;transition:1s}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
+.metric{padding:16px;border-radius:19px;background:var(--card);border:1px solid var(--line)}
+.metric .m-title{font-size:11px;color:var(--muted)}.metric .value{font-size:25px;font-weight:900;margin-top:8px}.metric .state{font-size:11px;margin-top:3px;color:var(--green)}
+.section{margin-top:14px;padding:18px;border-radius:21px;background:var(--card);border:1px solid var(--line)}
+.section h3{font-size:14px;margin:0 0 14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{display:flex;justify-content:space-between;color:#c8c9d2;font-size:12px}.stat b{color:#fff}
+.level{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding-top:15px;border-top:1px solid var(--line)}
+.level strong{font-size:17px}.level span{font-size:11px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:8px 10px;border-radius:10px;background:rgba(32,217,255,.09);border:1px solid rgba(32,217,255,.18);font-size:11px}
+.copy{width:100%;margin-top:12px;padding:12px;border:0;border-radius:13px;background:#1677ff;color:white;font-weight:800;cursor:pointer}
+.times{display:grid;gap:8px}.time{display:flex;justify-content:space-between;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.045);font-size:12px}.time b{color:#fff}
+.advice{line-height:1.65;color:#c8c9d2;font-size:12px}
+.disclaimer{font-size:10px;color:#777985;text-align:center;line-height:1.5;margin:17px 10px 0}
+.loading{display:none;text-align:center;color:var(--muted);font-size:12px;padding:18px}
+.spinner{display:inline-block;width:15px;height:15px;border:2px solid #555;border-top-color:#fff;border-radius:50%;vertical-align:-3px;animation:spin .7s linear infinite;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:390px){.hero h1{font-size:27px}.search button{padding:0 14px}.score{font-size:31px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><div class="logo">♪</div><div><b>Account Analyzer</b><span>Analisis akun TikTok</span></div></div>
+    <div class="badge">BETA</div>
+  </div>
+
+  <div class="hero">
+    <h1>Kenali Potensi Akun TikTok-mu</h1>
+    <p>Masukkan username untuk melihat ringkasan performa, engagement, level akun, hashtag, dan waktu posting.</p>
+    <div class="search">
+      <input id="username" placeholder="@username" autocomplete="off">
+      <button onclick="analyze()">Analisis</button>
+    </div>
+    <div class="demo-note">Versi awal menggunakan data simulasi untuk desain dan pengujian.</div>
+  </div>
+
+  <div class="loading" id="loading"><i class="spinner"></i> Menganalisis akun...</div>
+
+  <div id="result">
+    <div class="profile">
+      <div class="profile-head">
+        <div class="avatar" id="avatar">C</div>
+        <div><h2 id="displayName">Creator</h2><div class="handle" id="handle">@creator</div></div>
+      </div>
+      <div class="bio" id="bio">Hidup ini singkat, tersenyumlah selagi kamu masih punya gigi 😄</div>
+    </div>
+
+    <div class="health">
+      <div class="label">📊 Kesehatan Akun</div>
+      <div class="score-row"><div class="score" id="health">—</div><div class="status" id="healthStatus">—</div></div>
+      <div class="bar"><i id="healthBar"></i></div>
+    </div>
+
+    <div class="grid">
+      <div class="metric"><div class="m-title">📈 Engagement</div><div class="value" id="engagement">—</div><div class="state" id="engState">—</div></div>
+      <div class="metric"><div class="m-title">🚀 Potensi Viral</div><div class="value" id="viral">—</div><div class="state" id="viralState">—</div></div>
+    </div>
+
+    <div class="section">
+      <h3>📊 Statistik</h3>
+      <div class="stats">
+        <div class="stat"><span>👥 Followers</span><b id="followers">—</b></div>
+        <div class="stat"><span>👣 Following</span><b id="following">—</b></div>
+        <div class="stat"><span>❤️ Total Likes</span><b id="likes">—</b></div>
+        <div class="stat"><span>🎬 Video</span><b id="videos">—</b></div>
+      </div>
+      <div class="level"><div><span>🏆 Level Akun</span><strong id="level">—</strong></div><span id="category">—</span></div>
+    </div>
+
+    <div class="section">
+      <h3>🏷️ Kategori Akun</h3>
+      <div style="font-size:18px;font-weight:800" id="creatorType">🌱 Nano Creator</div>
+    </div>
+
+    <div class="section">
+      <h3>🏷️ Tag Rekomendasi</h3>
+      <div class="tags" id="tags"></div>
+      <button class="copy" onclick="copyTags()">▣ Copy Tag</button>
+    </div>
+
+    <div class="section">
+      <h3>⏰ Waktu Posting yang Direkomendasikan</h3>
+      <div class="times">
+        <div class="time"><span>🌙 Malam</span><b>19.00–20.00 WIB</b></div>
+        <div class="time"><span>☀️ Siang</span><b>14.00–15.00 WIB</b></div>
+        <div class="time"><span>🌙 Dini hari</span><b>01.00–02.00 WIB</b></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>💡 Saran Pengembangan</h3>
+      <div class="advice" id="advice"></div>
+    </div>
+
+    <div class="disclaimer">Skor kesehatan, potensi viral, level, rekomendasi tag, dan waktu posting pada versi ini adalah sistem analisis buatan aplikasi, bukan penilaian resmi TikTok.</div>
+  </div>
+</div>
+
+<script>
+let currentTags=[];
+function fmt(n){return new Intl.NumberFormat('id-ID').format(n)}
+function analyze(){
+  let u=document.getElementById('username').value.trim().replace(/^@/,'');
+  if(!u){alert('Masukkan username TikTok terlebih dahulu.');return}
+  document.getElementById('loading').style.display='block';
+  document.getElementById('result').style.display='none';
+  setTimeout(()=>{
+    const seed=[...u].reduce((a,c)=>a+c.charCodeAt(0),0);
+    const followers=100+seed%1900;
+    const following=70+seed%500;
+    const likes=followers*(2+(seed%8));
+    const videos=8+seed%90;
+    const engagement=(2.5+(seed%480)/100).toFixed(2);
+    const health=Math.min(95,35+Math.round(Number(engagement)*5)+(seed%20));
+    const viral=Math.min(95,30+Math.round(Number(engagement)*4)+(seed%18));
+    const level=health>=75?'4 • Pohon 🌳':health>=55?'3 • Tunas 🌿':'2 • Benih 🌱';
+    const category=followers<10000?'Nano Creator':followers<100000?'Micro Creator':followers<1000000?'Mid-tier Creator':'Macro Creator';
+    const initial=u.charAt(0).toUpperCase();
+    document.getElementById('avatar').textContent=initial;
+    document.getElementById('displayName').textContent=u.replace(/[-_]/g,' ');
+    document.getElementById('handle').textContent='@'+u;
+    document.getElementById('followers').textContent=fmt(followers);
+    document.getElementById('following').textContent=fmt(following);
+    document.getElementById('likes').textContent=fmt(likes);
+    document.getElementById('videos').textContent=fmt(videos);
+    document.getElementById('health').textContent=health+'%';
+    document.getElementById('healthStatus').textContent=health>=75?'🟢 Baik':health>=55?'🟡 Perlu Perbaikan':'🔴 Butuh Perhatian';
+    document.getElementById('healthBar').style.width=health+'%';
+    document.getElementById('engagement').textContent=engagement+'%';
+    document.getElementById('engState').textContent=engagement>=8?'🔥 Excellent':engagement>=5?'🟢 Bagus':'🟡 Perlu Boost';
+    document.getElementById('viral').textContent=viral+'%';
+    document.getElementById('viralState').textContent=viral>=70?'🟢 Tinggi':viral>=50?'🟡 Sedang':'🔴 Rendah';
+    document.getElementById('level').textContent=level;
+    document.getElementById('category').textContent=category;
+    document.getElementById('creatorType').textContent='🌱 '+category;
+    currentTags=['#fyp','#fypindonesia','#kontentiktok','#kreatorindonesia','#tipskonten'];
+    document.getElementById('tags').innerHTML=currentTags.map(x=>'<span class="tag">'+x+'</span>').join('');
+    document.getElementById('advice').innerHTML=health<60
+      ?'Perkuat konsistensi upload, buat pembuka video yang lebih menarik dalam 2–3 detik pertama, dan gunakan format konten yang mudah dikenali audiens.'
+      :'Pertahankan konsistensi konten. Uji beberapa gaya hook, durasi, dan waktu upload untuk melihat format yang menghasilkan interaksi paling tinggi.';
+    document.getElementById('loading').style.display='none';
+    document.getElementById('result').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  },800);
+}
+function copyTags(){
+  navigator.clipboard?.writeText(currentTags.join(' '));
+  const b=document.querySelector('.copy'); const old=b.textContent;b.textContent='✓ Tag berhasil disalin';setTimeout(()=>b.textContent=old,1300);
+}
+document.getElementById('username').addEventListener('keydown',e=>{if(e.key==='Enter')analyze()});
+</script>
+</body>
+</html>
