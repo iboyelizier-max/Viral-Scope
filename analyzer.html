@@ -3,195 +3,2066 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>TikTok Account Analyzer</title>
 <meta name="theme-color" content="#0b0b10">
+
 <style>
 *{box-sizing:border-box}
+
 :root{
-  --bg:#08090d;--card:rgba(255,255,255,.075);--line:rgba(255,255,255,.11);
-  --text:#f7f7fb;--muted:#a8a9b5;--pink:#ff2d55;--cyan:#20d9ff;
-  --green:#35d49a;--yellow:#ffcf4a;--red:#ff5964;
+  --bg:#08090d;
+  --card:rgba(255,255,255,.075);
+  --line:rgba(255,255,255,.11);
+  --text:#f7f7fb;
+  --muted:#a8a9b5;
+  --pink:#ff2d55;
+  --cyan:#20d9ff;
+  --green:#35d49a;
+  --yellow:#ffcf4a;
+  --red:#ff5964;
 }
+
 body{
-  margin:0;background:
+  margin:0;
+  background:
   radial-gradient(circle at 10% 0%,rgba(255,45,85,.22),transparent 30%),
   radial-gradient(circle at 90% 15%,rgba(32,217,255,.16),transparent 30%),
-  var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   min-height:100vh;
 }
-.app{width:100%;max-width:620px;margin:auto;padding:18px 15px 40px}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.brand{display:flex;gap:10px;align-items:center}
-.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--pink),#ff6b88 55%,var(--cyan));display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:0 8px 28px rgba(255,45,85,.25)}
-.brand b{font-size:17px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.badge{font-size:11px;color:#d9d9e3;border:1px solid var(--line);padding:7px 10px;border-radius:999px}
-.hero{text-align:center;padding:16px 8px 22px}
-.hero h1{font-size:31px;line-height:1.08;margin:0 0 10px;letter-spacing:-1px}
-.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
-.search{margin-top:20px;padding:7px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;display:flex;gap:8px}
-.search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:white;font-size:15px;padding:12px}
-.search button{border:0;border-radius:13px;padding:0 20px;background:linear-gradient(135deg,var(--pink),#ff174d);color:#fff;font-weight:800;cursor:pointer}
-.demo-note{font-size:10px;color:#7e808b;text-align:center;margin:9px 0 0}
-#result{display:none}
-.profile{margin-top:10px;padding:18px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);border-radius:23px}
-.profile-head{display:flex;align-items:center;gap:13px}
-.avatar{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:25px;font-weight:900;background:linear-gradient(135deg,#272733,#11121a);border:2px solid rgba(255,255,255,.15)}
-.profile h2{margin:0;font-size:18px}.handle{color:var(--muted);font-size:12px;margin-top:3px}.bio{color:#c8c9d1;font-size:12px;margin:12px 0 0}
-.health{margin-top:15px;padding:18px;border-radius:20px;background:linear-gradient(135deg,rgba(255,45,85,.12),rgba(255,207,74,.07));border:1px solid var(--line)}
-.label{font-size:12px;color:#c4c5cd}.score-row{display:flex;align-items:end;justify-content:space-between;margin-top:4px}
-.score{font-size:36px;font-weight:900}.status{font-size:12px;color:var(--yellow);padding-bottom:6px}
-.bar{height:8px;background:#262730;border-radius:99px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:inherit;transition:1s}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
-.metric{padding:16px;border-radius:19px;background:var(--card);border:1px solid var(--line)}
-.metric .m-title{font-size:11px;color:var(--muted)}.metric .value{font-size:25px;font-weight:900;margin-top:8px}.metric .state{font-size:11px;margin-top:3px;color:var(--green)}
-.section{margin-top:14px;padding:18px;border-radius:21px;background:var(--card);border:1px solid var(--line)}
-.section h3{font-size:14px;margin:0 0 14px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{display:flex;justify-content:space-between;color:#c8c9d2;font-size:12px}.stat b{color:#fff}
-.level{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding-top:15px;border-top:1px solid var(--line)}
-.level strong{font-size:17px}.level span{font-size:11px;color:var(--muted)}
-.tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:8px 10px;border-radius:10px;background:rgba(32,217,255,.09);border:1px solid rgba(32,217,255,.18);font-size:11px}
-.copy{width:100%;margin-top:12px;padding:12px;border:0;border-radius:13px;background:#1677ff;color:white;font-weight:800;cursor:pointer}
-.times{display:grid;gap:8px}.time{display:flex;justify-content:space-between;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.045);font-size:12px}.time b{color:#fff}
-.advice{line-height:1.65;color:#c8c9d2;font-size:12px}
-.disclaimer{font-size:10px;color:#777985;text-align:center;line-height:1.5;margin:17px 10px 0}
-.loading{display:none;text-align:center;color:var(--muted);font-size:12px;padding:18px}
-.spinner{display:inline-block;width:15px;height:15px;border:2px solid #555;border-top-color:#fff;border-radius:50%;vertical-align:-3px;animation:spin .7s linear infinite;margin-right:6px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:390px){.hero h1{font-size:27px}.search button{padding:0 14px}.score{font-size:31px}}
+
+.app{
+  width:100%;
+  max-width:620px;
+  margin:auto;
+  padding:18px 15px 40px
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:24px
+}
+
+.brand{
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--pink),#ff6b88 55%,var(--cyan));
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  font-size:21px;
+  box-shadow:0 8px 28px rgba(255,45,85,.25)
+}
+
+.brand b{
+  font-size:17px
+}
+
+.brand span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px
+}
+
+.badge{
+  font-size:11px;
+  color:#d9d9e3;
+  border:1px solid var(--line);
+  padding:7px 10px;
+  border-radius:999px
+}
+
+.hero{
+  text-align:center;
+  padding:16px 8px 22px
+}
+
+.hero h1{
+  font-size:31px;
+  line-height:1.08;
+  margin:0 0 10px;
+  letter-spacing:-1px
+}
+
+.hero p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6
+}
+
+.search{
+  margin-top:20px;
+  padding:7px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+  border-radius:18px;
+  display:flex;
+  gap:8px
+}
+
+.search input{
+  flex:1;
+  min-width:0;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:white;
+  font-size:15px;
+  padding:12px
+}
+
+.search button{
+  border:0;
+  border-radius:13px;
+  padding:0 20px;
+  background:linear-gradient(135deg,var(--pink),#ff174d);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap
+}
+
+.search button:disabled{
+  opacity:.65;
+  cursor:not-allowed
+}
+
+.demo-note{
+  font-size:10px;
+  color:#7e808b;
+  text-align:center;
+  margin:9px 0 0;
+  line-height:1.5
+}
+
+.connection-status{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(32,217,255,.06);
+  border:1px solid rgba(32,217,255,.12);
+  color:#aeb2bd;
+  font-size:10px;
+  line-height:1.5;
+  display:none
+}
+
+#result{
+  display:none
+}
+
+.profile{
+  margin-top:10px;
+  padding:18px;
+  border:1px solid var(--line);
+  background:var(--card);
+  backdrop-filter:blur(18px);
+  border-radius:23px
+}
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:13px
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:900;
+  background:linear-gradient(135deg,#272733,#11121a);
+  border:2px solid rgba(255,255,255,.15);
+  overflow:hidden;
+  flex-shrink:0
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.profile h2{
+  margin:0;
+  font-size:18px
+}
+
+.handle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px
+}
+
+.bio{
+  color:#c8c9d1;
+  font-size:12px;
+  margin:12px 0 0;
+  line-height:1.55
+}
+
+.verified{
+  display:inline-block;
+  margin-left:5px;
+  font-size:11px;
+  color:var(--cyan)
+}
+
+.health{
+  margin-top:15px;
+  padding:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,45,85,.12),rgba(255,207,74,.07));
+  border:1px solid var(--line)
+}
+
+.label{
+  font-size:12px;
+  color:#c4c5cd
+}
+
+.score-row{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-top:4px
+}
+
+.score{
+  font-size:36px;
+  font-weight:900
+}
+
+.status{
+  font-size:12px;
+  color:var(--yellow);
+  padding-bottom:6px
+}
+
+.bar{
+  height:8px;
+  background:#262730;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:12px
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--pink),var(--yellow));
+  border-radius:inherit;
+  transition:1s
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:11px
+}
+
+.metric{
+  padding:16px;
+  border-radius:19px;
+  background:var(--card);
+  border:1px solid var(--line)
+}
+
+.metric .m-title{
+  font-size:11px;
+  color:var(--muted)
+}
+
+.metric .value{
+  font-size:25px;
+  font-weight:900;
+  margin-top:8px
+}
+
+.metric .state{
+  font-size:11px;
+  margin-top:3px;
+  color:var(--green)
+}
+
+.section{
+  margin-top:14px;
+  padding:18px;
+  border-radius:21px;
+  background:var(--card);
+  border:1px solid var(--line)
+}
+
+.section h3{
+  font-size:14px;
+  margin:0 0 14px
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.stat{
+  display:flex;
+  justify-content:space-between;
+  color:#c8c9d2;
+  font-size:12px;
+  gap:10px
+}
+
+.stat b{
+  color:#fff
+}
+
+.level{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:15px;
+  padding-top:15px;
+  border-top:1px solid var(--line)
+}
+
+.level strong{
+  font-size:17px
+}
+
+.level span{
+  font-size:11px;
+  color:var(--muted)
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px
+}
+
+.tag{
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(32,217,255,.09);
+  border:1px solid rgba(32,217,255,.18);
+  font-size:11px
+}
+
+.copy{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  border:0;
+  border-radius:13px;
+  background:#1677ff;
+  color:white;
+  font-weight:800;
+  cursor:pointer
+}
+
+.times{
+  display:grid;
+  gap:8px
+}
+
+.time{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 12px;
+  border-radius:11px;
+  background:rgba(255,255,255,.045);
+  font-size:12px
+}
+
+.time b{
+  color:#fff
+}
+
+.advice{
+  line-height:1.65;
+  color:#c8c9d2;
+  font-size:12px
+}
+
+.data-note{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(53,212,154,.06);
+  border:1px solid rgba(53,212,154,.12);
+  color:#aeb2bd;
+  font-size:10px;
+  line-height:1.55
+}
+
+.error-box{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,89,100,.08);
+  border:1px solid rgba(255,89,100,.18);
+  color:#ffb5bb;
+  font-size:11px;
+  line-height:1.55
+}
+
+.disclaimer{
+  font-size:10px;
+  color:#777985;
+  text-align:center;
+  line-height:1.5;
+  margin:17px 10px 0
+}
+
+.loading{
+  display:none;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:18px
+}
+
+.spinner{
+  display:inline-block;
+  width:15px;
+  height:15px;
+  border:2px solid #555;
+  border-top-color:#fff;
+  border-radius:50%;
+  vertical-align:-3px;
+  animation:spin .7s linear infinite;
+  margin-right:6px
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+@media(max-width:390px){
+  .hero h1{font-size:27px}
+  .search button{padding:0 14px}
+  .score{font-size:31px}
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
   <div class="top">
-    <div class="brand"><div class="logo">♪</div><div><b>Account Analyzer</b><span>Analisis akun TikTok</span></div></div>
+    <div class="brand">
+      <div class="logo">♪</div>
+      <div>
+        <b>Account Analyzer</b>
+        <span>Analisis akun TikTok</span>
+      </div>
+    </div>
+
     <div class="badge">BETA</div>
   </div>
 
+
   <div class="hero">
+
     <h1>Kenali Potensi Akun TikTok-mu</h1>
-    <p>Masukkan username untuk melihat ringkasan performa, engagement, level akun, hashtag, dan waktu posting.</p>
+
+    <p>
+      Hubungkan akun TikTok untuk melihat statistik asli,
+      engagement, level akun, dan analisis performa.
+    </p>
+
     <div class="search">
-      <input id="username" placeholder="@username" autocomplete="off">
-      <button onclick="analyze()">Analisis</button>
+      <input
+        id="username"
+        placeholder="@username"
+        autocomplete="off"
+      >
+
+      <button id="analyzeBtn" onclick="analyze()">
+        Analisis
+      </button>
     </div>
-    <div class="demo-note">Versi awal menggunakan data simulasi untuk desain dan pengujian.</div>
+
+    <div class="demo-note">
+      Data statistik diambil dari akun TikTok yang telah Anda hubungkan.
+      Skor dan rekomendasi merupakan analisis internal ViralScope.
+    </div>
+
+    <div class="connection-status" id="connectionStatus"></div>
+
+    <div class="error-box" id="errorBox"></div>
+
   </div>
 
-  <div class="loading" id="loading"><i class="spinner"></i> Menganalisis akun...</div>
+
+  <div class="loading" id="loading">
+    <i class="spinner"></i>
+    Mengambil data TikTok...
+  </div>
+
 
   <div id="result">
+
     <div class="profile">
+
       <div class="profile-head">
-        <div class="avatar" id="avatar">C</div>
-        <div><h2 id="displayName">Creator</h2><div class="handle" id="handle">@creator</div></div>
+
+        <div class="avatar" id="avatar">
+          C
+        </div>
+
+        <div>
+          <h2 id="displayName">Creator</h2>
+          <div class="handle" id="handle">@creator</div>
+        </div>
+
       </div>
-      <div class="bio" id="bio">Hidup ini singkat, tersenyumlah selagi kamu masih punya gigi 😄</div>
+
+      <div class="bio" id="bio">
+        Informasi profil TikTok
+      </div>
+
     </div>
+
 
     <div class="health">
-      <div class="label">📊 Kesehatan Akun</div>
-      <div class="score-row"><div class="score" id="health">—</div><div class="status" id="healthStatus">—</div></div>
-      <div class="bar"><i id="healthBar"></i></div>
+
+      <div class="label">
+        📊 Kesehatan Akun
+      </div>
+
+      <div class="score-row">
+
+        <div class="score" id="health">
+          —
+        </div>
+
+        <div class="status" id="healthStatus">
+          —
+        </div>
+
+      </div>
+
+      <div class="bar">
+        <i id="healthBar"></i>
+      </div>
+
     </div>
+
 
     <div class="grid">
-      <div class="metric"><div class="m-title">📈 Engagement</div><div class="value" id="engagement">—</div><div class="state" id="engState">—</div></div>
-      <div class="metric"><div class="m-title">🚀 Potensi Viral</div><div class="value" id="viral">—</div><div class="state" id="viralState">—</div></div>
+
+      <div class="metric">
+
+        <div class="m-title">
+          📈 Engagement
+        </div>
+
+        <div class="value" id="engagement">
+          —
+        </div>
+
+        <div class="state" id="engState">
+          —
+        </div>
+
+      </div>
+
+
+      <div class="metric">
+
+        <div class="m-title">
+          🚀 Potensi Viral
+        </div>
+
+        <div class="value" id="viral">
+          —
+        </div>
+
+        <div class="state" id="viralState">
+          —
+        </div>
+
+      </div>
+
     </div>
 
+
     <div class="section">
-      <h3>📊 Statistik</h3>
+
+      <h3>
+        📊 Statistik
+      </h3>
+
       <div class="stats">
-        <div class="stat"><span>👥 Followers</span><b id="followers">—</b></div>
-        <div class="stat"><span>👣 Following</span><b id="following">—</b></div>
-        <div class="stat"><span>❤️ Total Likes</span><b id="likes">—</b></div>
-        <div class="stat"><span>🎬 Video</span><b id="videos">—</b></div>
+
+        <div class="stat">
+          <span>👥 Followers</span>
+          <b id="followers">—</b>
+        </div>
+
+        <div class="stat">
+          <span>👣 Following</span>
+          <b id="following">—</b>
+        </div>
+
+        <div class="stat">
+          <span>❤️ Total Likes</span>
+          <b id="likes">—</b>
+        </div>
+
+        <div class="stat">
+          <span>🎬 Video</span>
+          <b id="videos">—</b>
+        </div>
+
       </div>
-      <div class="level"><div><span>🏆 Level Akun</span><strong id="level">—</strong></div><span id="category">—</span></div>
+
+
+      <div class="level">
+
+        <div>
+          <span>🏆 Level Akun</span>
+          <strong id="level">—</strong>
+        </div>
+
+        <span id="category">—</span>
+
+      </div>
+
     </div>
 
-    <div class="section">
-      <h3>🏷️ Kategori Akun</h3>
-      <div style="font-size:18px;font-weight:800" id="creatorType">🌱 Nano Creator</div>
-    </div>
 
     <div class="section">
-      <h3>🏷️ Tag Rekomendasi</h3>
-      <div class="tags" id="tags"></div>
-      <button class="copy" onclick="copyTags()">▣ Copy Tag</button>
+
+      <h3>
+        🏷️ Kategori Akun
+      </h3>
+
+      <div
+        style="font-size:18px;font-weight:800"
+        id="creatorType"
+      >
+        🌱 Nano Creator
+      </div>
+
     </div>
 
+
     <div class="section">
-      <h3>⏰ Waktu Posting yang Direkomendasikan</h3>
+
+      <h3>
+        🏷️ Tag Rekomendasi
+      </h3>
+
+      <div
+        class="tags"
+        id="tags"
+      ></div>
+
+      <button
+        class="copy"
+        onclick="copyTags()"
+      >
+        ▣ Copy Tag
+      </button>
+
+    </div>
+
+
+    <div class="section">
+
+      <h3>
+        ⏰ Waktu Posting yang Direkomendasikan
+      </h3>
+
       <div class="times">
-        <div class="time"><span>🌙 Malam</span><b>19.00–20.00 WIB</b></div>
-        <div class="time"><span>☀️ Siang</span><b>14.00–15.00 WIB</b></div>
-        <div class="time"><span>🌙 Dini hari</span><b>01.00–02.00 WIB</b></div>
+
+        <div class="time">
+          <span>🌙 Malam</span>
+          <b>19.00–20.00 WIB</b>
+        </div>
+
+        <div class="time">
+          <span>☀️ Siang</span>
+          <b>14.00–15.00 WIB</b>
+        </div>
+
+        <div class="time">
+          <span>🌙 Dini hari</span>
+          <b>01.00–02.00 WIB</b>
+        </div>
+
       </div>
+
     </div>
+
 
     <div class="section">
-      <h3>💡 Saran Pengembangan</h3>
-      <div class="advice" id="advice"></div>
+
+      <h3>
+        💡 Saran Pengembangan
+      </h3>
+
+      <div
+        class="advice"
+        id="advice"
+      ></div>
+
+      <div class="data-note">
+        ℹ️ Statistik profil di atas berasal dari data TikTok yang tersedia
+        melalui koneksi akun Anda. Engagement, Kesehatan Akun,
+        Potensi Viral, Level, Kategori, dan rekomendasi adalah
+        hasil perhitungan internal ViralScope.
+      </div>
+
     </div>
 
-    <div class="disclaimer">Skor kesehatan, potensi viral, level, rekomendasi tag, dan waktu posting pada versi ini adalah sistem analisis buatan aplikasi, bukan penilaian resmi TikTok.</div>
+
+    <div class="disclaimer">
+      ViralScope adalah aplikasi independen dan tidak berafiliasi,
+      disponsori, atau didukung oleh TikTok.
+      Skor kesehatan, potensi viral, level, rekomendasi tag,
+      dan waktu posting bukan penilaian resmi TikTok.
+    </div>
+
   </div>
+
 </div>
 
+
 <script>
-let currentTags=[];
-function fmt(n){return new Intl.NumberFormat('id-ID').format(n)}
-function analyze(){
-  let u=document.getElementById('username').value.trim().replace(/^@/,'');
-  if(!u){alert('Masukkan username TikTok terlebih dahulu.');return}
-  document.getElementById('loading').style.display='block';
-  document.getElementById('result').style.display='none';
-  setTimeout(()=>{
-    const seed=[...u].reduce((a,c)=>a+c.charCodeAt(0),0);
-    const followers=100+seed%1900;
-    const following=70+seed%500;
-    const likes=followers*(2+(seed%8));
-    const videos=8+seed%90;
-    const engagement=(2.5+(seed%480)/100).toFixed(2);
-    const health=Math.min(95,35+Math.round(Number(engagement)*5)+(seed%20));
-    const viral=Math.min(95,30+Math.round(Number(engagement)*4)+(seed%18));
-    const level=health>=75?'4 • Pohon 🌳':health>=55?'3 • Tunas 🌿':'2 • Benih 🌱';
-    const category=followers<10000?'Nano Creator':followers<100000?'Micro Creator':followers<1000000?'Mid-tier Creator':'Macro Creator';
-    const initial=u.charAt(0).toUpperCase();
-    document.getElementById('avatar').textContent=initial;
-    document.getElementById('displayName').textContent=u.replace(/[-_]/g,' ');
-    document.getElementById('handle').textContent='@'+u;
-    document.getElementById('followers').textContent=fmt(followers);
-    document.getElementById('following').textContent=fmt(following);
-    document.getElementById('likes').textContent=fmt(likes);
-    document.getElementById('videos').textContent=fmt(videos);
-    document.getElementById('health').textContent=health+'%';
-    document.getElementById('healthStatus').textContent=health>=75?'🟢 Baik':health>=55?'🟡 Perlu Perbaikan':'🔴 Butuh Perhatian';
-    document.getElementById('healthBar').style.width=health+'%';
-    document.getElementById('engagement').textContent=engagement+'%';
-    document.getElementById('engState').textContent=engagement>=8?'🔥 Excellent':engagement>=5?'🟢 Bagus':'🟡 Perlu Boost';
-    document.getElementById('viral').textContent=viral+'%';
-    document.getElementById('viralState').textContent=viral>=70?'🟢 Tinggi':viral>=50?'🟡 Sedang':'🔴 Rendah';
-    document.getElementById('level').textContent=level;
-    document.getElementById('category').textContent=category;
-    document.getElementById('creatorType').textContent='🌱 '+category;
-    currentTags=['#fyp','#fypindonesia','#kontentiktok','#kreatorindonesia','#tipskonten'];
-    document.getElementById('tags').innerHTML=currentTags.map(x=>'<span class="tag">'+x+'</span>').join('');
-    document.getElementById('advice').innerHTML=health<60
-      ?'Perkuat konsistensi upload, buat pembuka video yang lebih menarik dalam 2–3 detik pertama, dan gunakan format konten yang mudah dikenali audiens.'
-      :'Pertahankan konsistensi konten. Uji beberapa gaya hook, durasi, dan waktu upload untuk melihat format yang menghasilkan interaksi paling tinggi.';
-    document.getElementById('loading').style.display='none';
-    document.getElementById('result').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-  },800);
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const WORKER_URL =
+  "https://solitary-river-93f6.iboyelizier.workers.dev";
+
+const GITHUB_ORIGIN =
+  "https://iboyelizier-max.github.io";
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let currentTags = [];
+
+let currentUser = null;
+
+let currentVideos = [];
+
+
+/* =========================================================
+   FORMAT ANGKA
+========================================================= */
+
+function fmt(n){
+
+  n = Number(n || 0);
+
+  return new Intl.NumberFormat("id-ID").format(n);
+
 }
-function copyTags(){
-  navigator.clipboard?.writeText(currentTags.join(' '));
-  const b=document.querySelector('.copy'); const old=b.textContent;b.textContent='✓ Tag berhasil disalin';setTimeout(()=>b.textContent=old,1300);
+
+
+/* =========================================================
+   FORMAT PERSENTASE
+========================================================= */
+
+function percent(n){
+
+  if(!Number.isFinite(n)){
+    return "0.00%";
+  }
+
+  return n.toFixed(2) + "%";
+
 }
-document.getElementById('username').addEventListener('keydown',e=>{if(e.key==='Enter')analyze()});
+
+
+/* =========================================================
+   ESCAPE HTML
+   Supaya data dari API aman ditampilkan.
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   STATUS UI
+========================================================= */
+
+function showLoading(text){
+
+  document.getElementById("loading").innerHTML =
+    '<i class="spinner"></i> ' + escapeHTML(text);
+
+  document.getElementById("loading").style.display = "block";
+
+  document.getElementById("result").style.display = "none";
+
+  document.getElementById("errorBox").style.display = "none";
+
+  document.getElementById("analyzeBtn").disabled = true;
+
+}
+
+
+function hideLoading(){
+
+  document.getElementById("loading").style.display = "none";
+
+  document.getElementById("analyzeBtn").disabled = false;
+
+}
+
+
+function showError(message){
+
+  hideLoading();
+
+  const box = document.getElementById("errorBox");
+
+  box.textContent = message;
+
+  box.style.display = "block";
+
+}
+
+
+/* =========================================================
+   AMBIL DATA PROFIL DARI WORKER
+========================================================= */
+
+async function getTikTokProfile(){
+
+  const response = await fetch(
+    WORKER_URL + "/api/me",
+    {
+      method:"GET",
+      credentials:"include",
+      headers:{
+        "Accept":"application/json"
+      }
+    }
+  );
+
+  let data = null;
+
+  try{
+    data = await response.json();
+  }catch(e){
+    throw new Error(
+      "Respons dari server tidak dapat dibaca."
+    );
+  }
+
+  if(!response.ok){
+
+    if(response.status === 401){
+
+      return {
+        notConnected:true
+      };
+
+    }
+
+    throw new Error(
+      data?.error ||
+      data?.message ||
+      "Gagal mengambil data TikTok."
+    );
+
+  }
+
+  if(!data.success || !data.user){
+
+    throw new Error(
+      "Data akun TikTok tidak ditemukan."
+    );
+
+  }
+
+  return data;
+
+}
+
+
+/* =========================================================
+   AMBIL VIDEO DARI WORKER
+========================================================= */
+
+async function getTikTokVideos(){
+
+  try{
+
+    const response = await fetch(
+      WORKER_URL + "/api/videos",
+      {
+        method:"GET",
+        credentials:"include",
+        headers:{
+          "Accept":"application/json"
+        }
+      }
+    );
+
+    if(!response.ok){
+
+      return {
+        videos:[]
+      };
+
+    }
+
+    const data = await response.json();
+
+    return data;
+
+  }catch(error){
+
+    console.warn(
+      "Data video tidak dapat diambil:",
+      error
+    );
+
+    return {
+      videos:[]
+    };
+
+  }
+
+}
+
+
+/* =========================================================
+   HITUNG ENGAGEMENT DARI VIDEO
+========================================================= */
+
+function calculateVideoEngagement(videos){
+
+  if(!Array.isArray(videos) || videos.length === 0){
+
+    return null;
+
+  }
+
+  let totalViews = 0;
+  let totalLikes = 0;
+  let totalComments = 0;
+  let totalShares = 0;
+
+  videos.forEach(video => {
+
+    const views =
+      Number(video.view_count || 0);
+
+    const likes =
+      Number(video.like_count || 0);
+
+    const comments =
+      Number(video.comment_count || 0);
+
+    const shares =
+      Number(video.share_count || 0);
+
+    if(views > 0){
+
+      totalViews += views;
+      totalLikes += likes;
+      totalComments += comments;
+      totalShares += shares;
+
+    }
+
+  });
+
+
+  if(totalViews <= 0){
+
+    return null;
+
+  }
+
+
+  const engagement =
+    (
+      (
+        totalLikes +
+        totalComments +
+        totalShares
+      ) /
+      totalViews
+    ) * 100;
+
+
+  return {
+    engagement,
+    totalViews,
+    totalLikes,
+    totalComments,
+    totalShares
+  };
+
+}
+
+
+/* =========================================================
+   FALLBACK ENGAGEMENT
+   Jika data video belum tersedia.
+========================================================= */
+
+function calculateProfileProxy(user){
+
+  const followers =
+    Number(user.follower_count || 0);
+
+  const likes =
+    Number(user.likes_count || 0);
+
+  const videos =
+    Number(user.video_count || 0);
+
+
+  if(followers <= 0){
+
+    return 0;
+
+  }
+
+
+  /*
+    Ini bukan engagement resmi TikTok.
+    Hanya proxy internal ViralScope.
+  */
+
+  const likePerFollower =
+    likes / followers;
+
+  const activity =
+    Math.min(videos / 100, 1);
+
+
+  let score =
+    likePerFollower * 100;
+
+
+  score =
+    score * 0.7 +
+    activity * 30;
+
+
+  return Math.min(
+    Math.max(score,0),
+    100
+  );
+
+}
+
+
+/* =========================================================
+   HITUNG HEALTH SCORE
+========================================================= */
+
+function calculateHealth(
+  engagement,
+  followers,
+  videos
+){
+
+  const e =
+    Number(engagement || 0);
+
+  const f =
+    Number(followers || 0);
+
+  const v =
+    Number(videos || 0);
+
+
+  /*
+    Semua nilai di bawah merupakan
+    rumus internal ViralScope.
+  */
+
+  const engagementScore =
+    Math.min(e * 8, 50);
+
+
+  const activityScore =
+    Math.min(v * 0.25, 20);
+
+
+  const audienceScore =
+    Math.min(
+      Math.log10(f + 1) * 4,
+      20
+    );
+
+
+  const base =
+    engagementScore +
+    activityScore +
+    audienceScore +
+    10;
+
+
+  return Math.min(
+    Math.max(Math.round(base),0),
+    100
+  );
+
+}
+
+
+/* =========================================================
+   HITUNG VIRAL SCORE
+========================================================= */
+
+function calculateViral(
+  engagement,
+  followers,
+  videos
+){
+
+  const e =
+    Number(engagement || 0);
+
+  const f =
+    Number(followers || 0);
+
+  const v =
+    Number(videos || 0);
+
+
+  const engagementScore =
+    Math.min(e * 7, 55);
+
+
+  const activityScore =
+    Math.min(v * 0.25, 20);
+
+
+  let growthOpportunity = 20;
+
+
+  if(f < 1000){
+    growthOpportunity = 20;
+  }
+  else if(f < 10000){
+    growthOpportunity = 16;
+  }
+  else if(f < 100000){
+    growthOpportunity = 12;
+  }
+  else{
+    growthOpportunity = 8;
+  }
+
+
+  const score =
+    engagementScore +
+    activityScore +
+    growthOpportunity +
+    5;
+
+
+  return Math.min(
+    Math.max(Math.round(score),0),
+    100
+  );
+
+}
+
+
+/* =========================================================
+   LEVEL AKUN
+========================================================= */
+
+function getLevel(health){
+
+  if(health >= 85){
+    return "5 • Bintang ⭐";
+  }
+
+  if(health >= 75){
+    return "4 • Pohon 🌳";
+  }
+
+  if(health >= 55){
+    return "3 • Tunas 🌿";
+  }
+
+  if(health >= 35){
+    return "2 • Benih 🌱";
+  }
+
+  return "1 • Awal 🌰";
+
+}
+
+
+/* =========================================================
+   KATEGORI CREATOR
+========================================================= */
+
+function getCategory(followers){
+
+  if(followers < 10000){
+    return "Nano Creator";
+  }
+
+  if(followers < 100000){
+    return "Micro Creator";
+  }
+
+  if(followers < 1000000){
+    return "Mid-tier Creator";
+  }
+
+  return "Macro Creator";
+
+}
+
+
+/* =========================================================
+   STATUS HEALTH
+========================================================= */
+
+function getHealthStatus(health){
+
+  if(health >= 75){
+    return "🟢 Baik";
+  }
+
+  if(health >= 55){
+    return "🟡 Perlu Perbaikan";
+  }
+
+  return "🔴 Butuh Perhatian";
+
+}
+
+
+/* =========================================================
+   STATUS ENGAGEMENT
+========================================================= */
+
+function getEngagementState(engagement){
+
+  if(engagement >= 10){
+    return "🔥 Sangat Tinggi";
+  }
+
+  if(engagement >= 6){
+    return "🟢 Bagus";
+  }
+
+  if(engagement >= 3){
+    return "🟡 Cukup";
+  }
+
+  return "🔴 Perlu Boost";
+
+}
+
+
+/* =========================================================
+   STATUS VIRAL
+========================================================= */
+
+function getViralState(viral){
+
+  if(viral >= 75){
+    return "🔥 Sangat Tinggi";
+  }
+
+  if(viral >= 55){
+    return "🟢 Tinggi";
+  }
+
+  if(viral >= 40){
+    return "🟡 Sedang";
+  }
+
+  return "🔴 Rendah";
+
+}
+
+
+/* =========================================================
+   REKOMENDASI TAG
+========================================================= */
+
+function generateTags(user){
+
+  const followers =
+    Number(user.follower_count || 0);
+
+
+  let tags = [
+    "#fyp",
+    "#fypindonesia",
+    "#tiktokindonesia",
+    "#kreatorindonesia"
+  ];
+
+
+  if(followers < 10000){
+
+    tags.push(
+      "#kontenkreator"
+    );
+
+  }
+  else if(followers < 100000){
+
+    tags.push(
+      "#contentcreator"
+    );
+
+  }
+  else{
+
+    tags.push(
+      "#tiktokcreator"
+    );
+
+  }
+
+
+  return tags;
+
+}
+
+
+/* =========================================================
+   SARAN PENGEMBANGAN
+========================================================= */
+
+function generateAdvice(
+  health,
+  engagement,
+  viral,
+  videos
+){
+
+  const advice = [];
+
+
+  if(engagement < 3){
+
+    advice.push(
+      "Fokus meningkatkan interaksi penonton dengan membuat hook yang lebih kuat pada 2–3 detik pertama."
+    );
+
+  }
+  else if(engagement < 6){
+
+    advice.push(
+      "Engagement sudah mulai terbentuk. Uji beberapa gaya hook, durasi, dan format video untuk menemukan pola yang paling menarik audiens."
+    );
+
+  }
+  else{
+
+    advice.push(
+      "Engagement terlihat cukup baik. Pertahankan format konten yang mendapatkan interaksi tinggi dan lakukan eksperimen secara bertahap."
+    );
+
+  }
+
+
+  if(videos < 20){
+
+    advice.push(
+      "Jumlah video masih relatif sedikit. Konsistensi publikasi dapat membantu Anda menguji lebih banyak format konten."
+    );
+
+  }
+  else if(videos >= 100){
+
+    advice.push(
+      "Anda sudah memiliki banyak konten. Manfaatkan video yang performanya bagus sebagai referensi untuk membuat variasi konten berikutnya."
+    );
+
+  }
+
+
+  if(health < 55){
+
+    advice.push(
+      "Prioritaskan konsistensi, kualitas pembuka video, dan relevansi konten dengan audiens."
+    );
+
+  }
+  else{
+
+    advice.push(
+      "Pertahankan konsistensi dan evaluasi performa konten secara berkala."
+    );
+
+  }
+
+
+  return advice.join(" ");
+
+}
+
+
+/* =========================================================
+   TAMPILKAN AVATAR
+========================================================= */
+
+function renderAvatar(user){
+
+  const avatar =
+    document.getElementById("avatar");
+
+
+  const avatarUrl =
+    user.avatar_url;
+
+
+  if(avatarUrl){
+
+    avatar.innerHTML =
+      '<img src="' +
+      escapeHTML(avatarUrl) +
+      '" alt="Avatar">';
+
+    return;
+
+  }
+
+
+  const name =
+    user.display_name ||
+    user.username ||
+    "C";
+
+
+  avatar.textContent =
+    name.charAt(0).toUpperCase();
+
+}
+
+
+/* =========================================================
+   RENDER DATA KE HALAMAN
+========================================================= */
+
+function renderResults(
+  user,
+  videosData
+){
+
+  currentUser = user;
+
+  currentVideos =
+    Array.isArray(videosData?.videos)
+      ? videosData.videos
+      : [];
+
+
+  const followers =
+    Number(user.follower_count || 0);
+
+  const following =
+    Number(user.following_count || 0);
+
+  const likes =
+    Number(user.likes_count || 0);
+
+  const videos =
+    Number(user.video_count || 0);
+
+
+  /*
+    Prioritas:
+    1. Engagement dari data video asli
+    2. Proxy internal bila data video tidak tersedia
+  */
+
+  const videoEngagement =
+    calculateVideoEngagement(
+      currentVideos
+    );
+
+
+  let engagement = 0;
+
+  let engagementSource =
+    "Proxy profil";
+
+
+  if(videoEngagement){
+
+    engagement =
+      videoEngagement.engagement;
+
+    engagementSource =
+      "Data video";
+
+  }
+  else{
+
+    engagement =
+      calculateProfileProxy(user);
+
+  }
+
+
+  const health =
+    calculateHealth(
+      engagement,
+      followers,
+      videos
+    );
+
+
+  const viral =
+    calculateViral(
+      engagement,
+      followers,
+      videos
+    );
+
+
+  const level =
+    getLevel(health);
+
+
+  const category =
+    getCategory(followers);
+
+
+  currentTags =
+    generateTags(user);
+
+
+  /* PROFILE */
+
+  renderAvatar(user);
+
+
+  const displayName =
+    user.display_name ||
+    user.username ||
+    "Creator";
+
+
+  document.getElementById(
+    "displayName"
+  ).innerHTML =
+    escapeHTML(displayName) +
+    (
+      user.is_verified
+        ? '<span class="verified">✓</span>'
+        : ""
+    );
+
+
+  document.getElementById(
+    "handle"
+  ).textContent =
+    "@" +
+    (user.username || "");
+
+
+  document.getElementById(
+    "bio"
+  ).textContent =
+    user.bio_description ||
+    "Belum ada bio yang tersedia.";
+
+
+  /* STATISTICS */
+
+  document.getElementById(
+    "followers"
+  ).textContent =
+    fmt(followers);
+
+
+  document.getElementById(
+    "following"
+  ).textContent =
+    fmt(following);
+
+
+  document.getElementById(
+    "likes"
+  ).textContent =
+    fmt(likes);
+
+
+  document.getElementById(
+    "videos"
+  ).textContent =
+    fmt(videos);
+
+
+  /* HEALTH */
+
+  document.getElementById(
+    "health"
+  ).textContent =
+    health + "%";
+
+
+  document.getElementById(
+    "healthStatus"
+  ).textContent =
+    getHealthStatus(health);
+
+
+  document.getElementById(
+    "healthBar"
+  ).style.width =
+    health + "%";
+
+
+  /* ENGAGEMENT */
+
+  document.getElementById(
+    "engagement"
+  ).textContent =
+    percent(engagement);
+
+
+  document.getElementById(
+    "engState"
+  ).textContent =
+    getEngagementState(engagement);
+
+
+  /* VIRAL */
+
+  document.getElementById(
+    "viral"
+  ).textContent =
+    viral + "%";
+
+
+  document.getElementById(
+    "viralState"
+  ).textContent =
+    getViralState(viral);
+
+
+  /* LEVEL */
+
+  document.getElementById(
+    "level"
+  ).textContent =
+    level;
+
+
+  document.getElementById(
+    "category"
+  ).textContent =
+    category;
+
+
+  document.getElementById(
+    "creatorType"
+  ).textContent =
+    "🌱 " + category;
+
+
+  /* TAGS */
+
+  document.getElementById(
+    "tags"
+  ).innerHTML =
+    currentTags
+      .map(tag =>
+        '<span class="tag">' +
+        escapeHTML(tag) +
+        '</span>'
+      )
+      .join("");
+
+
+  /* ADVICE */
+
+  document.getElementById(
+    "advice"
+  ).textContent =
+    generateAdvice(
+      health,
+      engagement,
+      viral,
+      videos
+    );
+
+
+  /* CONNECTION STATUS */
+
+  const connection =
+    document.getElementById(
+      "connectionStatus"
+    );
+
+
+  connection.style.display =
+    "block";
+
+
+  connection.textContent =
+    "✓ Terhubung dengan @" +
+    (user.username || "") +
+    " • Engagement dihitung dari " +
+    engagementSource +
+    ".";
+
+
+  /* SHOW RESULT */
+
+  document.getElementById(
+    "result"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =========================================================
+   ANALISIS UTAMA
+========================================================= */
+
+async function analyze(){
+
+  const input =
+    document.getElementById(
+      "username"
+    );
+
+
+  const requestedUsername =
+    input.value
+      .trim()
+      .replace(/^@/,"")
+      .toLowerCase();
+
+
+  if(!requestedUsername){
+
+    alert(
+      "Masukkan username TikTok terlebih dahulu."
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  showLoading(
+    "Memeriksa koneksi TikTok..."
+  );
+
+
+  try{
+
+    /*
+      Ambil profil dari Worker.
+    */
+
+    const profileData =
+      await getTikTokProfile();
+
+
+    /*
+      Jika belum terhubung,
+      arahkan ke TikTok Login.
+    */
+
+    if(profileData.notConnected){
+
+      document.getElementById(
+        "analyzeBtn"
+      ).disabled = false;
+
+
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
+
+
+      const lanjut =
+        confirm(
+          "Akun TikTok belum terhubung.\n\n" +
+          "Klik OK untuk menghubungkan akun TikTok melalui TikTok Login."
+        );
+
+
+      if(lanjut){
+
+        window.location.href =
+          WORKER_URL + "/login";
+
+      }
+
+
+      return;
+
+    }
+
+
+    const user =
+      profileData.user;
+
+
+    const actualUsername =
+      String(
+        user.username || ""
+      ).toLowerCase();
+
+
+    /*
+      API TikTok yang kita gunakan saat ini
+      mengambil akun yang diotorisasi.
+      Karena itu username harus cocok.
+    */
+
+    if(
+      actualUsername &&
+      requestedUsername !== actualUsername
+    ){
+
+      throw new Error(
+        "Username yang dimasukkan @" +
+        requestedUsername +
+        " tidak sama dengan akun TikTok yang terhubung @" +
+        actualUsername +
+        ". Silakan masukkan username akun yang terhubung."
+      );
+
+    }
+
+
+    showLoading(
+      "Mengambil statistik dan data video..."
+    );
+
+
+    /*
+      Ambil video untuk menghitung
+      engagement internal ViralScope.
+    */
+
+    const videosData =
+      await getTikTokVideos();
+
+
+    renderResults(
+      user,
+      videosData
+    );
+
+
+    hideLoading();
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+
+  }catch(error){
+
+    console.error(
+      "ViralScope error:",
+      error
+    );
+
+
+    showError(
+      error?.message ||
+      "Terjadi kesalahan saat mengambil data TikTok."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   COPY TAG
+========================================================= */
+
+async function copyTags(){
+
+  if(!currentTags.length){
+
+    return;
+
+  }
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      currentTags.join(" ")
+    );
+
+
+    const button =
+      document.querySelector(
+        ".copy"
+      );
+
+
+    const oldText =
+      button.textContent;
+
+
+    button.textContent =
+      "✓ Tag berhasil disalin";
+
+
+    setTimeout(() => {
+
+      button.textContent =
+        oldText;
+
+    },1300);
+
+
+  }catch(error){
+
+    alert(
+      "Tag: " +
+      currentTags.join(" ")
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ENTER UNTUK ANALISIS
+========================================================= */
+
+document
+  .getElementById("username")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+
+        analyze();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   CEK OTOMATIS SAAT HALAMAN DIBUKA
+========================================================= */
+
+window.addEventListener(
+  "load",
+  async function(){
+
+    /*
+      Kita tidak langsung mengarahkan
+      pengguna ke TikTok saat membuka website.
+
+      Hanya mencoba melihat apakah
+      sesi TikTok sudah tersedia.
+    */
+
+    try{
+
+      const data =
+        await getTikTokProfile();
+
+
+      if(
+        !data.notConnected &&
+        data.user
+      ){
+
+        const username =
+          data.user.username || "";
+
+
+        document.getElementById(
+          "username"
+        ).value =
+          username;
+
+
+        const connection =
+          document.getElementById(
+            "connectionStatus"
+          );
+
+
+        connection.style.display =
+          "block";
+
+
+        connection.textContent =
+          "✓ Akun TikTok terhubung: @" +
+          username;
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "Belum ada sesi TikTok aktif."
+      );
+
+    }
+
+  }
+);
+
 </script>
+
 </body>
 </html>
