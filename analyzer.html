@@ -2401,7 +2401,7 @@ async function analyze(fromConnectedButton = false){
    LOGOUT / GANTI AKUN
 ========================================================= */
 
-async function logoutTikTok(){
+function logoutTikTok(){
 
   const yakin =
     confirm(
@@ -2409,109 +2409,29 @@ async function logoutTikTok(){
       "Setelah logout, Anda dapat menghubungkan akun TikTok lain."
     );
 
-
   if(!yakin){
-
     return;
-
   }
-
 
   const logoutBtn =
-    document.getElementById(
-      "logoutBtn"
-    );
+    document.getElementById("logoutBtn");
 
-
-  logoutBtn.disabled =
-    true;
-
-  logoutBtn.textContent =
-    "⏳ Logout...";
-
-
-  try{
-
-    const response =
-      await fetch(
-        WORKER_URL + "/logout",
-        {
-          method:"GET",
-          credentials:"include",
-          headers:{
-            "Accept":"application/json"
-          }
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Logout gagal. Silakan coba lagi."
-      );
-
-    }
-
-
-    currentUser =
-      null;
-
-    currentVideos =
-      [];
-
-    currentTags =
-      [];
-
-
-    document.getElementById(
-      "result"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "errorBox"
-    ).style.display =
-      "none";
-
-
-    setDisconnectedUI();
-
-
-    window.scrollTo({
-
-      top:0,
-
-      behavior:"smooth"
-
-    });
-
-
-  }catch(error){
-
-    console.error(
-      "Logout error:",
-      error
-    );
-
-
-    showError(
-      error?.message ||
-      "Gagal melakukan logout."
-    );
-
-
-    logoutBtn.disabled =
-      false;
-
-    logoutBtn.textContent =
-      "↪ Ganti / Logout Akun";
-
+  if(logoutBtn){
+    logoutBtn.disabled = true;
+    logoutBtn.textContent = "⏳ Logout...";
   }
 
+  /*
+   * Jangan menggunakan fetch() di sini.
+   *
+   * Cookie TikTok adalah HttpOnly sehingga proses
+   * penghapusan cookie dilakukan langsung oleh Worker.
+   *
+   * Browser diarahkan langsung ke endpoint /logout.
+   */
+  window.location.href =
+    WORKER_URL + "/logout";
 }
-
 
 /* =========================================================
    COPY TAG
