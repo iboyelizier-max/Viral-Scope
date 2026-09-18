@@ -8,7 +8,9 @@
 <meta name="theme-color" content="#0b0b10">
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 :root{
   --bg:#08090d;
@@ -26,9 +28,17 @@
 body{
   margin:0;
   background:
-  radial-gradient(circle at 10% 0%,rgba(255,45,85,.22),transparent 30%),
-  radial-gradient(circle at 90% 15%,rgba(32,217,255,.16),transparent 30%),
-  var(--bg);
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(255,45,85,.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(32,217,255,.16),
+      transparent 30%
+    ),
+    var(--bg);
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   min-height:100vh;
@@ -38,43 +48,50 @@ body{
   width:100%;
   max-width:620px;
   margin:auto;
-  padding:18px 15px 40px
+  padding:18px 15px 40px;
 }
 
 .top{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:24px
+  margin-bottom:24px;
 }
 
 .brand{
   display:flex;
   gap:10px;
-  align-items:center
+  align-items:center;
 }
 
 .logo{
   width:42px;
   height:42px;
   border-radius:14px;
-  background:linear-gradient(135deg,var(--pink),#ff6b88 55%,var(--cyan));
+  background:
+    linear-gradient(
+      135deg,
+      var(--pink),
+      #ff6b88 55%,
+      var(--cyan)
+    );
   display:grid;
   place-items:center;
   font-weight:900;
   font-size:21px;
-  box-shadow:0 8px 28px rgba(255,45,85,.25)
+  box-shadow:
+    0 8px 28px rgba(255,45,85,.25);
 }
 
 .brand b{
-  font-size:17px
+  font-size:17px;
 }
 
 .brand span{
   display:block;
   color:var(--muted);
   font-size:11px;
-  margin-top:2px
+  margin-top:2px;
 }
 
 .badge{
@@ -82,63 +99,129 @@ body{
   color:#d9d9e3;
   border:1px solid var(--line);
   padding:7px 10px;
-  border-radius:999px
+  border-radius:999px;
 }
 
 .hero{
   text-align:center;
-  padding:16px 8px 22px
+  padding:16px 8px 22px;
 }
 
 .hero h1{
   font-size:31px;
   line-height:1.08;
   margin:0 0 10px;
-  letter-spacing:-1px
+  letter-spacing:-1px;
 }
 
 .hero p{
   margin:0;
   color:var(--muted);
   font-size:13px;
-  line-height:1.6
+  line-height:1.6;
+}
+
+/* =========================================================
+   CONNECTION AREA
+========================================================= */
+
+.connection-box{
+  margin-top:20px;
+  padding:12px;
+  border-radius:20px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
 }
 
 .search{
-  margin-top:20px;
-  padding:7px;
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--line);
-  border-radius:18px;
   display:flex;
-  gap:8px
-}
-
-.search input{
-  flex:1;
-  min-width:0;
-  background:transparent;
-  border:0;
-  outline:0;
-  color:white;
-  font-size:15px;
-  padding:12px
+  width:100%;
 }
 
 .search button{
+  width:100%;
+  min-height:52px;
   border:0;
-  border-radius:13px;
-  padding:0 20px;
-  background:linear-gradient(135deg,var(--pink),#ff174d);
+  border-radius:14px;
+  padding:14px 18px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--pink),
+      #ff174d 55%,
+      #ff4d78
+    );
   color:#fff;
   font-weight:800;
+  font-size:14px;
   cursor:pointer;
-  white-space:nowrap
+  white-space:normal;
+  line-height:1.3;
+  box-shadow:
+    0 8px 24px rgba(255,45,85,.20);
+  transition:
+    transform .2s ease,
+    opacity .2s ease,
+    box-shadow .2s ease;
+}
+
+.search button:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 11px 28px rgba(255,45,85,.28);
+}
+
+.search button:active{
+  transform:translateY(0);
 }
 
 .search button:disabled{
   opacity:.65;
-  cursor:not-allowed
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+.account-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:9px;
+}
+
+.account-actions button{
+  min-height:43px;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.analyze-connected{
+  border:1px solid rgba(53,212,154,.25);
+  background:rgba(53,212,154,.10);
+  color:#8ff0cb;
+}
+
+.analyze-connected:hover{
+  background:rgba(53,212,154,.16);
+}
+
+.logout-button{
+  border:1px solid rgba(255,89,100,.22);
+  background:rgba(255,89,100,.07);
+  color:#ffabb2;
+}
+
+.logout-button:hover{
+  background:rgba(255,89,100,.12);
+}
+
+.account-actions button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .demo-note{
@@ -146,24 +229,33 @@ body{
   color:#7e808b;
   text-align:center;
   margin:9px 0 0;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .connection-status{
   margin-top:10px;
-  padding:10px 12px;
+  padding:11px 12px;
   border-radius:12px;
   background:rgba(32,217,255,.06);
   border:1px solid rgba(32,217,255,.12);
-  color:#aeb2bd;
+  color:#c8f5ff;
   font-size:10px;
   line-height:1.5;
-  display:none
+  display:none;
+  text-align:left;
+}
+
+.connection-status strong{
+  color:#fff;
 }
 
 #result{
-  display:none
+  display:none;
 }
+
+/* =========================================================
+   PROFILE
+========================================================= */
 
 .profile{
   margin-top:10px;
@@ -171,13 +263,13 @@ body{
   border:1px solid var(--line);
   background:var(--card);
   backdrop-filter:blur(18px);
-  border-radius:23px
+  border-radius:23px;
 }
 
 .profile-head{
   display:flex;
   align-items:center;
-  gap:13px
+  gap:13px;
 }
 
 .avatar{
@@ -188,72 +280,86 @@ body{
   place-items:center;
   font-size:25px;
   font-weight:900;
-  background:linear-gradient(135deg,#272733,#11121a);
+  background:
+    linear-gradient(
+      135deg,
+      #272733,
+      #11121a
+    );
   border:2px solid rgba(255,255,255,.15);
   overflow:hidden;
-  flex-shrink:0
+  flex-shrink:0;
 }
 
 .avatar img{
   width:100%;
   height:100%;
-  object-fit:cover
+  object-fit:cover;
 }
 
 .profile h2{
   margin:0;
-  font-size:18px
+  font-size:18px;
 }
 
 .handle{
   color:var(--muted);
   font-size:12px;
-  margin-top:3px
+  margin-top:3px;
 }
 
 .bio{
   color:#c8c9d1;
   font-size:12px;
   margin:12px 0 0;
-  line-height:1.55
+  line-height:1.55;
 }
 
 .verified{
   display:inline-block;
   margin-left:5px;
   font-size:11px;
-  color:var(--cyan)
+  color:var(--cyan);
 }
+
+/* =========================================================
+   HEALTH
+========================================================= */
 
 .health{
   margin-top:15px;
   padding:18px;
   border-radius:20px;
-  background:linear-gradient(135deg,rgba(255,45,85,.12),rgba(255,207,74,.07));
-  border:1px solid var(--line)
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,45,85,.12),
+      rgba(255,207,74,.07)
+    );
+  border:1px solid var(--line);
 }
 
 .label{
   font-size:12px;
-  color:#c4c5cd
+  color:#c4c5cd;
 }
 
 .score-row{
   display:flex;
   align-items:end;
   justify-content:space-between;
-  margin-top:4px
+  margin-top:4px;
 }
 
 .score{
   font-size:36px;
-  font-weight:900
+  font-weight:900;
 }
 
 .status{
   font-size:12px;
   color:var(--yellow);
-  padding-bottom:6px
+  padding-bottom:6px;
 }
 
 .bar{
@@ -261,66 +367,79 @@ body{
   background:#262730;
   border-radius:99px;
   overflow:hidden;
-  margin-top:12px
+  margin-top:12px;
 }
 
 .bar i{
   display:block;
   height:100%;
   width:0;
-  background:linear-gradient(90deg,var(--pink),var(--yellow));
+  background:
+    linear-gradient(
+      90deg,
+      var(--pink),
+      var(--yellow)
+    );
   border-radius:inherit;
-  transition:1s
+  transition:1s;
 }
+
+/* =========================================================
+   METRICS
+========================================================= */
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:11px;
-  margin-top:11px
+  margin-top:11px;
 }
 
 .metric{
   padding:16px;
   border-radius:19px;
   background:var(--card);
-  border:1px solid var(--line)
+  border:1px solid var(--line);
 }
 
 .metric .m-title{
   font-size:11px;
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .metric .value{
   font-size:25px;
   font-weight:900;
-  margin-top:8px
+  margin-top:8px;
 }
 
 .metric .state{
   font-size:11px;
   margin-top:3px;
-  color:var(--green)
+  color:var(--green);
 }
+
+/* =========================================================
+   SECTION
+========================================================= */
 
 .section{
   margin-top:14px;
   padding:18px;
   border-radius:21px;
   background:var(--card);
-  border:1px solid var(--line)
+  border:1px solid var(--line);
 }
 
 .section h3{
   font-size:14px;
-  margin:0 0 14px
+  margin:0 0 14px;
 }
 
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px
+  gap:12px;
 }
 
 .stat{
@@ -328,11 +447,11 @@ body{
   justify-content:space-between;
   color:#c8c9d2;
   font-size:12px;
-  gap:10px
+  gap:10px;
 }
 
 .stat b{
-  color:#fff
+  color:#fff;
 }
 
 .level{
@@ -341,22 +460,22 @@ body{
   justify-content:space-between;
   margin-top:15px;
   padding-top:15px;
-  border-top:1px solid var(--line)
+  border-top:1px solid var(--line);
 }
 
 .level strong{
-  font-size:17px
+  font-size:17px;
 }
 
 .level span{
   font-size:11px;
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .tags{
   display:flex;
   flex-wrap:wrap;
-  gap:7px
+  gap:7px;
 }
 
 .tag{
@@ -364,7 +483,7 @@ body{
   border-radius:10px;
   background:rgba(32,217,255,.09);
   border:1px solid rgba(32,217,255,.18);
-  font-size:11px
+  font-size:11px;
 }
 
 .copy{
@@ -376,12 +495,12 @@ body{
   background:#1677ff;
   color:white;
   font-weight:800;
-  cursor:pointer
+  cursor:pointer;
 }
 
 .times{
   display:grid;
-  gap:8px
+  gap:8px;
 }
 
 .time{
@@ -390,17 +509,17 @@ body{
   padding:10px 12px;
   border-radius:11px;
   background:rgba(255,255,255,.045);
-  font-size:12px
+  font-size:12px;
 }
 
 .time b{
-  color:#fff
+  color:#fff;
 }
 
 .advice{
   line-height:1.65;
   color:#c8c9d2;
-  font-size:12px
+  font-size:12px;
 }
 
 .data-note{
@@ -411,8 +530,12 @@ body{
   border:1px solid rgba(53,212,154,.12);
   color:#aeb2bd;
   font-size:10px;
-  line-height:1.55
+  line-height:1.55;
 }
+
+/* =========================================================
+   ERROR
+========================================================= */
 
 .error-box{
   display:none;
@@ -423,23 +546,31 @@ body{
   border:1px solid rgba(255,89,100,.18);
   color:#ffb5bb;
   font-size:11px;
-  line-height:1.55
+  line-height:1.55;
 }
+
+/* =========================================================
+   DISCLAIMER
+========================================================= */
 
 .disclaimer{
   font-size:10px;
   color:#777985;
   text-align:center;
   line-height:1.5;
-  margin:17px 10px 0
+  margin:17px 10px 0;
 }
+
+/* =========================================================
+   LOADING
+========================================================= */
 
 .loading{
   display:none;
   text-align:center;
   color:var(--muted);
   font-size:12px;
-  padding:18px
+  padding:18px;
 }
 
 .spinner{
@@ -451,17 +582,50 @@ body{
   border-radius:50%;
   vertical-align:-3px;
   animation:spin .7s linear infinite;
-  margin-right:6px
+  margin-right:6px;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media(max-width:390px){
-  .hero h1{font-size:27px}
-  .search button{padding:0 14px}
-  .score{font-size:31px}
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .account-actions{
+    grid-template-columns:1fr;
+  }
+
+  .score{
+    font-size:31px;
+  }
+
+  .time{
+    flex-direction:column;
+    gap:4px;
+  }
+
+}
+
+@media(max-width:330px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
 }
 </style>
 </head>
@@ -471,54 +635,118 @@ body{
 <div class="app">
 
   <div class="top">
+
     <div class="brand">
-      <div class="logo">♪</div>
-      <div>
-        <b>Account Analyzer</b>
-        <span>Analisis akun TikTok</span>
+
+      <div class="logo">
+        ♪
       </div>
+
+      <div>
+
+        <b>Account Analyzer</b>
+
+        <span>
+          Analisis akun TikTok
+        </span>
+
+      </div>
+
     </div>
 
-    <div class="badge">BETA</div>
+    <div class="badge">
+      BETA
+    </div>
+
   </div>
 
 
   <div class="hero">
 
-    <h1>Kenali Potensi Akun TikTok-mu</h1>
+    <h1>
+      Kenali Potensi Akun TikTok-mu
+    </h1>
 
     <p>
       Hubungkan akun TikTok untuk melihat statistik asli,
       engagement, level akun, dan analisis performa.
     </p>
 
-    <div class="search">
-      <input
-        id="username"
-        placeholder="@username"
-        autocomplete="off"
+
+    <!-- CONNECTION BUTTON -->
+
+    <div class="connection-box">
+
+      <div class="search">
+
+        <button
+          id="analyzeBtn"
+          onclick="analyze()"
+        >
+          🔗 Hubungkan Akun TikTok
+        </button>
+
+      </div>
+
+
+      <div
+        class="account-actions"
+        id="accountActions"
+        style="display:none;"
       >
 
-      <button id="analyzeBtn" onclick="analyze()">
-        Analisis
-      </button>
+        <button
+          class="analyze-connected"
+          id="analyzeConnectedBtn"
+          onclick="analyzeConnectedAccount()"
+        >
+          📊 Analisis Akun Terhubung
+        </button>
+
+        <button
+          class="logout-button"
+          id="logoutBtn"
+          onclick="logoutTikTok()"
+        >
+          ↪ Ganti / Logout Akun
+        </button>
+
+      </div>
+
     </div>
+
 
     <div class="demo-note">
+
       Data statistik diambil dari akun TikTok yang telah Anda hubungkan.
       Skor dan rekomendasi merupakan analisis internal ViralScope.
+
     </div>
 
-    <div class="connection-status" id="connectionStatus"></div>
 
-    <div class="error-box" id="errorBox"></div>
+    <div
+      class="connection-status"
+      id="connectionStatus"
+    ></div>
+
+
+    <div
+      class="error-box"
+      id="errorBox"
+    ></div>
 
   </div>
 
 
-  <div class="loading" id="loading">
+  <div
+    class="loading"
+    id="loading"
+  >
+
     <i class="spinner"></i>
+
     Mengambil data TikTok...
+
   </div>
 
 
@@ -528,18 +756,35 @@ body{
 
       <div class="profile-head">
 
-        <div class="avatar" id="avatar">
+        <div
+          class="avatar"
+          id="avatar"
+        >
           C
         </div>
 
         <div>
-          <h2 id="displayName">Creator</h2>
-          <div class="handle" id="handle">@creator</div>
+
+          <h2 id="displayName">
+            Creator
+          </h2>
+
+          <div
+            class="handle"
+            id="handle"
+          >
+            @creator
+          </div>
+
         </div>
 
       </div>
 
-      <div class="bio" id="bio">
+
+      <div
+        class="bio"
+        id="bio"
+      >
         Informasi profil TikTok
       </div>
 
@@ -554,18 +799,26 @@ body{
 
       <div class="score-row">
 
-        <div class="score" id="health">
+        <div
+          class="score"
+          id="health"
+        >
           —
         </div>
 
-        <div class="status" id="healthStatus">
+        <div
+          class="status"
+          id="healthStatus"
+        >
           —
         </div>
 
       </div>
 
       <div class="bar">
+
         <i id="healthBar"></i>
+
       </div>
 
     </div>
@@ -579,11 +832,17 @@ body{
           📈 Engagement
         </div>
 
-        <div class="value" id="engagement">
+        <div
+          class="value"
+          id="engagement"
+        >
           —
         </div>
 
-        <div class="state" id="engState">
+        <div
+          class="state"
+          id="engState"
+        >
           —
         </div>
 
@@ -596,11 +855,17 @@ body{
           🚀 Potensi Viral
         </div>
 
-        <div class="value" id="viral">
+        <div
+          class="value"
+          id="viral"
+        >
           —
         </div>
 
-        <div class="state" id="viralState">
+        <div
+          class="state"
+          id="viralState"
+        >
           —
         </div>
 
@@ -618,23 +883,54 @@ body{
       <div class="stats">
 
         <div class="stat">
-          <span>👥 Followers</span>
-          <b id="followers">—</b>
+
+          <span>
+            👥 Followers
+          </span>
+
+          <b id="followers">
+            —
+          </b>
+
         </div>
 
-        <div class="stat">
-          <span>👣 Following</span>
-          <b id="following">—</b>
-        </div>
 
         <div class="stat">
-          <span>❤️ Total Likes</span>
-          <b id="likes">—</b>
+
+          <span>
+            👣 Following
+          </span>
+
+          <b id="following">
+            —
+          </b>
+
         </div>
 
+
         <div class="stat">
-          <span>🎬 Video</span>
-          <b id="videos">—</b>
+
+          <span>
+            ❤️ Total Likes
+          </span>
+
+          <b id="likes">
+            —
+          </b>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            🎬 Video
+          </span>
+
+          <b id="videos">
+            —
+          </b>
+
         </div>
 
       </div>
@@ -643,11 +939,20 @@ body{
       <div class="level">
 
         <div>
-          <span>🏆 Level Akun</span>
-          <strong id="level">—</strong>
+
+          <span>
+            🏆 Level Akun
+          </span>
+
+          <strong id="level">
+            —
+          </strong>
+
         </div>
 
-        <span id="category">—</span>
+        <span id="category">
+          —
+        </span>
 
       </div>
 
@@ -681,6 +986,7 @@ body{
         id="tags"
       ></div>
 
+
       <button
         class="copy"
         onclick="copyTags()"
@@ -700,18 +1006,41 @@ body{
       <div class="times">
 
         <div class="time">
-          <span>🌙 Malam</span>
-          <b>19.00–20.00 WIB</b>
+
+          <span>
+            🌙 Malam
+          </span>
+
+          <b>
+            19.00–20.00 WIB
+          </b>
+
         </div>
 
-        <div class="time">
-          <span>☀️ Siang</span>
-          <b>14.00–15.00 WIB</b>
-        </div>
 
         <div class="time">
-          <span>🌙 Dini hari</span>
-          <b>01.00–02.00 WIB</b>
+
+          <span>
+            ☀️ Siang
+          </span>
+
+          <b>
+            14.00–15.00 WIB
+          </b>
+
+        </div>
+
+
+        <div class="time">
+
+          <span>
+            🌙 Dini hari
+          </span>
+
+          <b>
+            01.00–02.00 WIB
+          </b>
+
         </div>
 
       </div>
@@ -730,21 +1059,26 @@ body{
         id="advice"
       ></div>
 
+
       <div class="data-note">
+
         ℹ️ Statistik profil di atas berasal dari data TikTok yang tersedia
         melalui koneksi akun Anda. Engagement, Kesehatan Akun,
         Potensi Viral, Level, Kategori, dan rekomendasi adalah
         hasil perhitungan internal ViralScope.
+
       </div>
 
     </div>
 
 
     <div class="disclaimer">
+
       ViralScope adalah aplikasi independen dan tidak berafiliasi,
       disponsori, atau didukung oleh TikTok.
       Skor kesehatan, potensi viral, level, rekomendasi tag,
       dan waktu posting bukan penilaian resmi TikTok.
+
     </div>
 
   </div>
@@ -796,7 +1130,9 @@ function fmt(n){
 function percent(n){
 
   if(!Number.isFinite(n)){
+
     return "0.00%";
+
   }
 
   return n.toFixed(2) + "%";
@@ -806,7 +1142,6 @@ function percent(n){
 
 /* =========================================================
    ESCAPE HTML
-   Supaya data dari API aman ditampilkan.
 ========================================================= */
 
 function escapeHTML(value){
@@ -828,24 +1163,31 @@ function escapeHTML(value){
 function showLoading(text){
 
   document.getElementById("loading").innerHTML =
-    '<i class="spinner"></i> ' + escapeHTML(text);
+    '<i class="spinner"></i> ' +
+    escapeHTML(text);
 
-  document.getElementById("loading").style.display = "block";
+  document.getElementById("loading").style.display =
+    "block";
 
-  document.getElementById("result").style.display = "none";
+  document.getElementById("result").style.display =
+    "none";
 
-  document.getElementById("errorBox").style.display = "none";
+  document.getElementById("errorBox").style.display =
+    "none";
 
-  document.getElementById("analyzeBtn").disabled = true;
+  document.getElementById("analyzeBtn").disabled =
+    true;
 
 }
 
 
 function hideLoading(){
 
-  document.getElementById("loading").style.display = "none";
+  document.getElementById("loading").style.display =
+    "none";
 
-  document.getElementById("analyzeBtn").disabled = false;
+  document.getElementById("analyzeBtn").disabled =
+    false;
 
 }
 
@@ -854,11 +1196,82 @@ function showError(message){
 
   hideLoading();
 
-  const box = document.getElementById("errorBox");
+  const box =
+    document.getElementById("errorBox");
 
-  box.textContent = message;
+  box.textContent =
+    message;
 
-  box.style.display = "block";
+  box.style.display =
+    "block";
+
+}
+
+
+/* =========================================================
+   UPDATE CONNECTION UI
+========================================================= */
+
+function setConnectedUI(user){
+
+  const analyzeBtn =
+    document.getElementById("analyzeBtn");
+
+  const accountActions =
+    document.getElementById("accountActions");
+
+  const connection =
+    document.getElementById("connectionStatus");
+
+  const username =
+    user?.username || "";
+
+  analyzeBtn.textContent =
+    "✓ Akun TikTok Terhubung";
+
+  analyzeBtn.disabled =
+    false;
+
+  accountActions.style.display =
+    "grid";
+
+  connection.style.display =
+    "block";
+
+  connection.innerHTML =
+    "✓ Terhubung dengan <strong>@" +
+    escapeHTML(username) +
+    "</strong>. " +
+    "Anda dapat menganalisis akun ini atau mengganti akun.";
+
+}
+
+
+function setDisconnectedUI(){
+
+  const analyzeBtn =
+    document.getElementById("analyzeBtn");
+
+  const accountActions =
+    document.getElementById("accountActions");
+
+  const connection =
+    document.getElementById("connectionStatus");
+
+  analyzeBtn.textContent =
+    "🔗 Hubungkan Akun TikTok";
+
+  analyzeBtn.disabled =
+    false;
+
+  accountActions.style.display =
+    "none";
+
+  connection.style.display =
+    "none";
+
+  connection.innerHTML =
+    "";
 
 }
 
@@ -869,26 +1282,33 @@ function showError(message){
 
 async function getTikTokProfile(){
 
-  const response = await fetch(
-    WORKER_URL + "/api/me",
-    {
-      method:"GET",
-      credentials:"include",
-      headers:{
-        "Accept":"application/json"
+  const response =
+    await fetch(
+      WORKER_URL + "/api/me",
+      {
+        method:"GET",
+        credentials:"include",
+        headers:{
+          "Accept":"application/json"
+        }
       }
-    }
-  );
+    );
 
   let data = null;
 
   try{
-    data = await response.json();
+
+    data =
+      await response.json();
+
   }catch(e){
+
     throw new Error(
       "Respons dari server tidak dapat dibaca."
     );
+
   }
+
 
   if(!response.ok){
 
@@ -908,6 +1328,7 @@ async function getTikTokProfile(){
 
   }
 
+
   if(!data.success || !data.user){
 
     throw new Error(
@@ -916,17 +1337,42 @@ async function getTikTokProfile(){
 
   }
 
-  console.log("=== DATA TIKTOK DARI API ===");
-    console.log(data);
-    console.log("Username:", data?.user?.username);
-    console.log("Followers:", data?.user?.follower_count);
-    console.log("Following:", data?.user?.following_count);
-    console.log("Likes:", data?.user?.likes_count);
-    console.log("Videos:", data?.user?.video_count);
 
-    return data;
+  console.log(
+    "=== DATA TIKTOK DARI API ==="
+  );
 
-  }
+  console.log(data);
+
+  console.log(
+    "Username:",
+    data?.user?.username
+  );
+
+  console.log(
+    "Followers:",
+    data?.user?.follower_count
+  );
+
+  console.log(
+    "Following:",
+    data?.user?.following_count
+  );
+
+  console.log(
+    "Likes:",
+    data?.user?.likes_count
+  );
+
+  console.log(
+    "Videos:",
+    data?.user?.video_count
+  );
+
+
+  return data;
+
+}
 
 
 /* =========================================================
@@ -937,20 +1383,22 @@ async function getTikTokVideos(){
 
   try{
 
-    const response = await fetch(
-  WORKER_URL + "/api/videos",
-  {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "text/plain"
-    },
-    body: JSON.stringify({
-      max_count: 20
-    })
-  }
-);
+    const response =
+      await fetch(
+        WORKER_URL + "/api/videos",
+        {
+          method:"POST",
+          credentials:"include",
+          headers:{
+            "Accept":"application/json",
+            "Content-Type":"text/plain"
+          },
+          body:JSON.stringify({
+            max_count:20
+          })
+        }
+      );
+
 
     if(!response.ok){
 
@@ -960,7 +1408,10 @@ async function getTikTokVideos(){
 
     }
 
-    const data = await response.json();
+
+    const data =
+      await response.json();
+
 
     return data;
 
@@ -970,6 +1421,7 @@ async function getTikTokVideos(){
       "Data video tidak dapat diambil:",
       error
     );
+
 
     return {
       videos:[]
@@ -986,16 +1438,24 @@ async function getTikTokVideos(){
 
 function calculateVideoEngagement(videos){
 
-  if(!Array.isArray(videos) || videos.length === 0){
+  if(
+    !Array.isArray(videos) ||
+    videos.length === 0
+  ){
 
     return null;
 
   }
 
+
   let totalViews = 0;
+
   let totalLikes = 0;
+
   let totalComments = 0;
+
   let totalShares = 0;
+
 
   videos.forEach(video => {
 
@@ -1011,11 +1471,15 @@ function calculateVideoEngagement(videos){
     const shares =
       Number(video.share_count || 0);
 
+
     if(views > 0){
 
       totalViews += views;
+
       totalLikes += likes;
+
       totalComments += comments;
+
       totalShares += shares;
 
     }
@@ -1042,11 +1506,17 @@ function calculateVideoEngagement(videos){
 
 
   return {
+
     engagement,
+
     totalViews,
+
     totalLikes,
+
     totalComments,
+
     totalShares
+
   };
 
 }
@@ -1054,7 +1524,6 @@ function calculateVideoEngagement(videos){
 
 /* =========================================================
    FALLBACK ENGAGEMENT
-   Jika data video belum tersedia.
 ========================================================= */
 
 function calculateProfileProxy(user){
@@ -1076,16 +1545,11 @@ function calculateProfileProxy(user){
   }
 
 
-  /*
-    Ini bukan engagement resmi TikTok.
-    Hanya proxy internal ViralScope.
-  */
-
   const likePerFollower =
     likes / followers;
 
   const activity =
-    Math.min(videos / 100, 1);
+    Math.min(videos / 100,1);
 
 
   let score =
@@ -1093,7 +1557,7 @@ function calculateProfileProxy(user){
 
 
   score =
-    score * 0.7 +
+    score * .7 +
     activity * 30;
 
 
@@ -1125,18 +1589,11 @@ function calculateHealth(
     Number(videos || 0);
 
 
-  /*
-    Semua nilai di bawah merupakan
-    rumus internal ViralScope.
-  */
-
   const engagementScore =
-    Math.min(e * 8, 50);
-
+    Math.min(e * 8,50);
 
   const activityScore =
-    Math.min(v * 0.25, 20);
-
+    Math.min(v * .25,20);
 
   const audienceScore =
     Math.min(
@@ -1181,27 +1638,39 @@ function calculateViral(
 
 
   const engagementScore =
-    Math.min(e * 7, 55);
-
+    Math.min(e * 7,55);
 
   const activityScore =
-    Math.min(v * 0.25, 20);
+    Math.min(v * .25,20);
 
 
-  let growthOpportunity = 20;
+  let growthOpportunity =
+    20;
 
 
   if(f < 1000){
-    growthOpportunity = 20;
+
+    growthOpportunity =
+      20;
+
   }
   else if(f < 10000){
-    growthOpportunity = 16;
+
+    growthOpportunity =
+      16;
+
   }
   else if(f < 100000){
-    growthOpportunity = 12;
+
+    growthOpportunity =
+      12;
+
   }
   else{
-    growthOpportunity = 8;
+
+    growthOpportunity =
+      8;
+
   }
 
 
@@ -1227,19 +1696,27 @@ function calculateViral(
 function getLevel(health){
 
   if(health >= 85){
+
     return "5 • Bintang ⭐";
+
   }
 
   if(health >= 75){
+
     return "4 • Pohon 🌳";
+
   }
 
   if(health >= 55){
+
     return "3 • Tunas 🌿";
+
   }
 
   if(health >= 35){
+
     return "2 • Benih 🌱";
+
   }
 
   return "1 • Awal 🌰";
@@ -1254,15 +1731,21 @@ function getLevel(health){
 function getCategory(followers){
 
   if(followers < 10000){
+
     return "Nano Creator";
+
   }
 
   if(followers < 100000){
+
     return "Micro Creator";
+
   }
 
   if(followers < 1000000){
+
     return "Mid-tier Creator";
+
   }
 
   return "Macro Creator";
@@ -1277,11 +1760,15 @@ function getCategory(followers){
 function getHealthStatus(health){
 
   if(health >= 75){
+
     return "🟢 Baik";
+
   }
 
   if(health >= 55){
+
     return "🟡 Perlu Perbaikan";
+
   }
 
   return "🔴 Butuh Perhatian";
@@ -1296,15 +1783,21 @@ function getHealthStatus(health){
 function getEngagementState(engagement){
 
   if(engagement >= 10){
+
     return "🔥 Sangat Tinggi";
+
   }
 
   if(engagement >= 6){
+
     return "🟢 Bagus";
+
   }
 
   if(engagement >= 3){
+
     return "🟡 Cukup";
+
   }
 
   return "🔴 Perlu Boost";
@@ -1319,15 +1812,21 @@ function getEngagementState(engagement){
 function getViralState(viral){
 
   if(viral >= 75){
+
     return "🔥 Sangat Tinggi";
+
   }
 
   if(viral >= 55){
+
     return "🟢 Tinggi";
+
   }
 
   if(viral >= 40){
+
     return "🟡 Sedang";
+
   }
 
   return "🔴 Rendah";
@@ -1346,10 +1845,15 @@ function generateTags(user){
 
 
   let tags = [
+
     "#fyp",
+
     "#fypindonesia",
+
     "#tiktokindonesia",
+
     "#kreatorindonesia"
+
   ];
 
 
@@ -1502,7 +2006,9 @@ function renderResults(
   videosData
 ){
 
-  currentUser = user;
+  currentUser =
+    user;
+
 
   currentVideos =
     Array.isArray(videosData?.videos)
@@ -1523,19 +2029,15 @@ function renderResults(
     Number(user.video_count || 0);
 
 
-  /*
-    Prioritas:
-    1. Engagement dari data video asli
-    2. Proxy internal bila data video tidak tersedia
-  */
-
   const videoEngagement =
     calculateVideoEngagement(
       currentVideos
     );
 
 
-  let engagement = 0;
+  let engagement =
+    0;
+
 
   let engagementSource =
     "Proxy profil";
@@ -1713,7 +2215,8 @@ function renderResults(
   document.getElementById(
     "creatorType"
   ).textContent =
-    "🌱 " + category;
+    "🌱 " +
+    category;
 
 
   /* TAGS */
@@ -1755,12 +2258,15 @@ function renderResults(
     "block";
 
 
-  connection.textContent =
-    "✓ Terhubung dengan @" +
-    (user.username || "") +
-    " • Engagement dihitung dari " +
-    engagementSource +
+  connection.innerHTML =
+    "✓ Terhubung dengan <strong>@" +
+    escapeHTML(user.username || "") +
+    "</strong> • Engagement dihitung dari " +
+    escapeHTML(engagementSource) +
     ".";
+
+
+  setConnectedUI(user);
 
 
   /* SHOW RESULT */
@@ -1774,36 +2280,21 @@ function renderResults(
 
 
 /* =========================================================
+   ANALISIS AKUN TERHUBUNG
+========================================================= */
+
+async function analyzeConnectedAccount(){
+
+  await analyze(true);
+
+}
+
+
+/* =========================================================
    ANALISIS UTAMA
 ========================================================= */
 
-async function analyze(){
-
-  const input =
-    document.getElementById(
-      "username"
-    );
-
-
-  const requestedUsername =
-    input.value
-      .trim()
-      .replace(/^@/,"")
-      .toLowerCase();
-
-
-  if(!requestedUsername){
-
-    alert(
-      "Masukkan username TikTok terlebih dahulu."
-    );
-
-    input.focus();
-
-    return;
-
-  }
-
+async function analyze(fromConnectedButton = false){
 
   showLoading(
     "Memeriksa koneksi TikTok..."
@@ -1811,10 +2302,6 @@ async function analyze(){
 
 
   try{
-
-    /*
-      Ambil profil dari Worker.
-    */
 
     const profileData =
       await getTikTokProfile();
@@ -1827,14 +2314,9 @@ async function analyze(){
 
     if(profileData.notConnected){
 
-      document.getElementById(
-        "analyzeBtn"
-      ).disabled = false;
+      hideLoading();
 
-
-      document.getElementById(
-        "loading"
-      ).style.display = "none";
+      setDisconnectedUI();
 
 
       const lanjut =
@@ -1847,7 +2329,8 @@ async function analyze(){
       if(lanjut){
 
         window.location.href =
-          WORKER_URL + "/login";
+          WORKER_URL +
+          "/login";
 
       }
 
@@ -1861,32 +2344,7 @@ async function analyze(){
       profileData.user;
 
 
-    const actualUsername =
-      String(
-        user.username || ""
-      ).toLowerCase();
-
-
-    /*
-      API TikTok yang kita gunakan saat ini
-      mengambil akun yang diotorisasi.
-      Karena itu username harus cocok.
-    */
-
-    if(
-      actualUsername &&
-      requestedUsername !== actualUsername
-    ){
-
-      throw new Error(
-        "Username yang dimasukkan @" +
-        requestedUsername +
-        " tidak sama dengan akun TikTok yang terhubung @" +
-        actualUsername +
-        ". Silakan masukkan username akun yang terhubung."
-      );
-
-    }
+    setConnectedUI(user);
 
 
     showLoading(
@@ -1913,8 +2371,11 @@ async function analyze(){
 
 
     window.scrollTo({
+
       top:0,
+
       behavior:"smooth"
+
     });
 
 
@@ -1930,6 +2391,122 @@ async function analyze(){
       error?.message ||
       "Terjadi kesalahan saat mengambil data TikTok."
     );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGOUT / GANTI AKUN
+========================================================= */
+
+async function logoutTikTok(){
+
+  const yakin =
+    confirm(
+      "Apakah Anda ingin logout dari akun TikTok yang terhubung?\n\n" +
+      "Setelah logout, Anda dapat menghubungkan akun TikTok lain."
+    );
+
+
+  if(!yakin){
+
+    return;
+
+  }
+
+
+  const logoutBtn =
+    document.getElementById(
+      "logoutBtn"
+    );
+
+
+  logoutBtn.disabled =
+    true;
+
+  logoutBtn.textContent =
+    "⏳ Logout...";
+
+
+  try{
+
+    const response =
+      await fetch(
+        WORKER_URL + "/logout",
+        {
+          method:"GET",
+          credentials:"include",
+          headers:{
+            "Accept":"application/json"
+          }
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Logout gagal. Silakan coba lagi."
+      );
+
+    }
+
+
+    currentUser =
+      null;
+
+    currentVideos =
+      [];
+
+    currentTags =
+      [];
+
+
+    document.getElementById(
+      "result"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "errorBox"
+    ).style.display =
+      "none";
+
+
+    setDisconnectedUI();
+
+
+    window.scrollTo({
+
+      top:0,
+
+      behavior:"smooth"
+
+    });
+
+
+  }catch(error){
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+
+    showError(
+      error?.message ||
+      "Gagal melakukan logout."
+    );
+
+
+    logoutBtn.disabled =
+      false;
+
+    logoutBtn.textContent =
+      "↪ Ganti / Logout Akun";
 
   }
 
@@ -1991,26 +2568,6 @@ async function copyTags(){
 
 
 /* =========================================================
-   ENTER UNTUK ANALISIS
-========================================================= */
-
-document
-  .getElementById("username")
-  .addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key === "Enter"){
-
-        analyze();
-
-      }
-
-    }
-  );
-
-
-/* =========================================================
    CEK OTOMATIS SAAT HALAMAN DIBUKA
 ========================================================= */
 
@@ -2019,10 +2576,10 @@ window.addEventListener(
   async function(){
 
     /*
-      Kita tidak langsung mengarahkan
-      pengguna ke TikTok saat membuka website.
+      Tidak langsung mengarahkan
+      pengguna ke TikTok.
 
-      Hanya mencoba melihat apakah
+      Hanya memeriksa apakah
       sesi TikTok sudah tersedia.
     */
 
@@ -2037,29 +2594,14 @@ window.addEventListener(
         data.user
       ){
 
-        const username =
-          data.user.username || "";
+        setConnectedUI(
+          data.user
+        );
 
+      }
+      else{
 
-        document.getElementById(
-          "username"
-        ).value =
-          username;
-
-
-        const connection =
-          document.getElementById(
-            "connectionStatus"
-          );
-
-
-        connection.style.display =
-          "block";
-
-
-        connection.textContent =
-          "✓ Akun TikTok terhubung: @" +
-          username;
+        setDisconnectedUI();
 
       }
 
@@ -2068,6 +2610,8 @@ window.addEventListener(
       console.log(
         "Belum ada sesi TikTok aktif."
       );
+
+      setDisconnectedUI();
 
     }
 
